@@ -3,7 +3,7 @@ set -o errexit
 
 # this file is used to continue the stopped blockchain
 
-echo "=== start blockchain with  ==="
+echo " ****************** start blockchain with  ****************** "
 
 # set PATH
 PATH="$PATH:/opt/eosio/bin"

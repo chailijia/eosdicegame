@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-echo "=== start of first time setup ==="
+echo " ****************** first time setup ****************** "
 
 # change to script's directory
 cd "$(dirname "$0")"
@@ -18,20 +18,23 @@ if [ ! -x "$(command -v docker)" ] ||
   echo ""
   exit
 fi
+echo -e "\n"
 
 # download eosio/eos-dev:v1.2.5 image
-echo "=== pull eosio/eos-dev image v1.2.5 from docker hub ==="
+echo " ****************** pull eosio/eos-dev image v1.2.5 from docker hub ****************** "
 docker pull eosio/eos-dev:v1.2.5
+echo -e "\n"
 
 # force remove the perivous container if any
 # create a clean data folder in eosio_docker to preserve block data
-echo "=== setup/reset data for eosio_docker ==="
-docker rm --force eosio_cardgame_container
-rm -rf "./eosio_docker/data"
+echo " ****************** setup/reset data for eosio_docker ****************** "
+docker rm --force eosio_container
+sudo rm -rf "./eosio_docker/data"
 mkdir -p "./eosio_docker/data"
+echo -e "\n"
 
 # set up node_modules for frontend
-echo "=== npm install packpage for frontend react app ==="
+echo " ****************** npm install packpage for frontend react app ****************** "
 # change directory to ./frontend
 cd "$SCRIPTPATH/frontend"
 npm install
