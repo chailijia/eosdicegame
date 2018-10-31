@@ -1,2 +1,0 @@
-# eosdicegame
-Eos dice game
