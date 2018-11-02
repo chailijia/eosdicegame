@@ -3,14 +3,19 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
 // Components
-import { Login } from 'components';
+import { Login, Card, GameInfo } from 'components';
+
+
 
 class App extends Component {
 
   render() {
     return (
       <div className="App">
-        <Login />
+
+        <GameInfo/>
+
+
       </div>
     );
   }
