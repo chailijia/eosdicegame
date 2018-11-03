@@ -3,6 +3,9 @@ import Login from './Login';
 import Card from './Card';
 import Button from './Button'
 import GameInfo from './GameInfo'
+import PlayerInfo from './PlayerInfo'
+import GameMat from './GameMat'
+import HandCards from './HandCards'
 
 
 export {
@@ -11,4 +14,7 @@ export {
   Card,
   Button,
   GameInfo,
+  PlayerInfo,
+  GameMat,
+  HandCards,
 }
