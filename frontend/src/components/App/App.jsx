@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
 // Components
-import { Login, Card, GameInfo, PlayerInfo, GameMat } from 'components';
+import { Login, Card, GameInfo, PlayerInfo, GameMat,Game } from 'components';
 
 
 
@@ -13,20 +13,7 @@ class App extends Component {
     return (
       <div className="App">
 
-
-        <GameMat
-          deckCardCount={2}
-          aiLife={1}
-          aiHandCards={2}
-          aiName="TAM"
-          playerLife={1}
-          playerHandCards={2}
-          playerName={"QUOC"}
-          onPlayCard={1}
-        />
-
-        <GameInfo />
-
+      <Game/>
 
 
 
