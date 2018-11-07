@@ -31,9 +31,9 @@ class HandCards extends Component {
       <div className={`HandCards${ className ? ' ' + className : '' }`}>
         {/* { generateCards(cards) } */}
         {<Card cardId={1} />}
-        {<Card cardId={3} />}
+        {/* {<Card cardId={3} />}
         {<Card cardId={5} />}
-        {<Card cardId={6} />}
+        {<Card cardId={6} />} */}
       </div>
     )
   }

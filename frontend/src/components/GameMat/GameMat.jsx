@@ -14,24 +14,29 @@ class GameMat extends Component {
     // The 1st row is AI (`PlayerInfo`, Deck card, `HandCards`)
     // The 2nd row is Player (`PlayerInfo`, Deck card, `HandCards`)
     return (
-      <table className={`GameMat${ className ? ' ' + className : '' }`}>
+      <table className={`GameMat`}>
         <tbody>
+
           <tr>
-            <td className="mat mat-ai">
+            <td className="mat mat-player">
+
               <PlayerInfo
-                className="ai"
+                className="mat mat-ai"
                 name={ aiName }
                 life={ aiLife }
               />
-              <div className={`deck ai remain${deckCardCount}`}>
-                { aiName }'S Deck ({ deckCardCount })
+
+              <div className={`deck ai remain${2}`}>
               </div>
+
               <HandCards
                 className="ai"
-                // cards={ aiHandCards }
               />
+
             </td>
           </tr>
+
+
           <tr>
             <td className="mat mat-player">
               <PlayerInfo
@@ -39,8 +44,7 @@ class GameMat extends Component {
                 name={ playerName }
                 life={ playerLife }
               />
-              <div className={`deck player remain${deckCardCount}`}>
-                { playerName }'S Deck ({ deckCardCount })
+              <div className={`deck player remain${2}`}>
               </div>
               <HandCards
                 className="player"
@@ -49,6 +53,9 @@ class GameMat extends Component {
               />
             </td>
           </tr>
+
+
+
         </tbody>
       </table>
     )

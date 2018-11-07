@@ -18,50 +18,27 @@ class Game extends Component {
 
   }
 
-  // Get latest user object from blockchain
-  loadUser() {
-  }
-
-  handleStartGame() {
-
-  }
-
-  handlePlayCard(cardIdx) {
-
-  }
-
-  handleNextRound() {
-
-  }
-
-  handleEndGame() {
-
-  }
 
   render() {
     // Extract data from state and user data of `UserReducer` from redux
-    const { loading } = this.state;
     return (
-      <section className={`Game${ (loading ? " loading" : "") }`}>
-        { 
-            <div className="container">
+      <section className="Game">
+        {
+          <div className="container">
+            {/* <GameMat
+              deckCardCount={2}
+              aiLife={1}
+              aiHandCards={2}
+              aiName="TAM"
+              playerLife={1}
+              playerHandCards={2}
+              playerName={"QUOC"}
+              onPlayCard={1}
+            /> */}
 
-        <GameMat
-          deckCardCount={2}
-          aiLife={1}
-          aiHandCards={2}
-          aiName="TAM"
-          playerLife={1}
-          playerHandCards={2}
-          playerName={"QUOC"}
-          onPlayCard={1}
-        />
-
-        <GameInfo />
-
-
-
-            </div>
+            {/* <GameInfo /> */}
+            hoashflhaslfh klashfklah 
+           </div>           
         }
 
       </section>
