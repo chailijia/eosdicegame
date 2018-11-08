@@ -12,9 +12,9 @@ class Info extends Component {
     return (
       <div className={"Info"}>
       
-        <p>ROUND X</p>
+        {/* <p>ROUND X</p> */}
 
-        <div><Button onClick={ onEndGame } className="small blue">RULE</Button></div>
+        {/* <div><Button onClick={ onEndGame } className="small blue">RULE</Button></div> */}
 
       </div>
     )

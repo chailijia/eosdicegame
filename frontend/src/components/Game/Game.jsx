@@ -37,7 +37,6 @@ class Game extends Component {
             /> */}
 
             {/* <GameInfo /> */}
-            hoashflhaslfh klashfklah 
            </div>           
         }
 
