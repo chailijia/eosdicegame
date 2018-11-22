@@ -7,6 +7,7 @@ import PlayerInfo from './PlayerInfo'
 import GameMat from './GameMat'
 import HandCards from './HandCards'
 import Game from './Game'
+import Header from './Header'
 
 
 export {
@@ -19,4 +20,5 @@ export {
   GameMat,
   HandCards,
   Game,
+  Header,
 }
