@@ -13,16 +13,16 @@ class Header extends Component {
 			<div className="navbar">
 
 				<div className="logo_div">
-					<img src={logo} alt=" " href="#" className="logo" />
+					<a href="https://www.google.com/"><img src={logo} alt=" " className="logo" /></a>
 				</div>
 
 				<nav className="navbar_links">
 					<ul className="menu">
-						<img src={fb_icon} alt=" " href="#" className="icon" />
-						<img src={mail_icon} alt=" " href="#" className="icon" />
-						<img src={medium_icon} alt=" " href="#" className="icon" />
-						<img src={twitter_icon} alt=" " href="#" className="icon" />
-						<img src={telegram_icon} alt=" " href="#" className="icon" />
+						<a href="https://www.facebook.com/"><img src={fb_icon} alt=" " className="icon" /></a>
+						<a href="https://mail.google.com/"><img src={mail_icon} alt=" " className="icon" /></a>
+						<a href="https://medium.com/"><img src={medium_icon} alt=" " className="icon" /></a>
+						<a href="https://twitter.com/?lang=en"><img src={twitter_icon} alt=" " className="icon" /></a>
+						<a href="https://telegram.org/"><img src={telegram_icon} alt=" " className="icon" /></a>
 
 						<li><a href="#">Referral</a></li>
 						<li><a href="#">Rule</a></li>
