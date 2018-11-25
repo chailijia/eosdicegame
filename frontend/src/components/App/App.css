@@ -22,6 +22,7 @@ body {
 
 .App {
   min-height: 100vh;
-  background-image: url("./images/Game_background.jpg");
-  background-size: cover;
+  /* background-image: url("./images/Game_background.jpg"); */
+  /* background-size: cover; */
+  background: #171933;
 }

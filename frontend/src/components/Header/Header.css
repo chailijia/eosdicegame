@@ -1,6 +1,44 @@
-.Header{
-    min-height: 8vh;
-    background: rgb(247, 244, 244);
+.navbar{
+    width: 100%;
+    overflow: hidden;
+    height: 10%;
+    line-height: 70px;
+    background: #171933;
+    border-bottom: 1px solid white;
+}
 
-    
+.logo{
+    width: 150px;
+    height: 50px;
+    float: left;
+    margin-top: 13px;
+    margin-left: 100px;
+}
+
+.menu{
+    float: right;
+}
+
+.menu li{
+    float: left;
+    width: 150px;
+    height: 70px;
+    line-height: 70px;
+    text-align: center;
+    list-style: none;
+}
+
+.menu li a{
+    color: #171933;
+    text-decoration: none;
+    text-transform: uppercase;
+    color: white;
+    font-size: 18px;
+}
+
+.menu li:hover{
+    background: green;
+    border-bottom: 3px solid red;
+
+
 }

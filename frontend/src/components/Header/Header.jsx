@@ -1,32 +1,33 @@
 import React, { Component } from 'react';
+import logo from './images/logo.png'
 
 class Header extends Component {
-    render() {
-        return (
-            <div className="Header">
-			<header id="header">
-                
-					<div id="logo">
-						<h1><a href="#">Cool<span>Logo</span></a></h1>
+	render() {
+		return (
+			<div className="navbar">
+
+				<div className="container">
+					<div className="logo_div">
+						<img src={logo} alt=" " className="logo"/>
 					</div>
+				</div>
 
-					<div>
-						<ul>
-						<li><a href="#">About</a></li>
-						<li><a href="#">Contact</a></li>
-						<li><a href="#">FAQ</a></li>
-						<li><a href="#">Help</a></li>
-						</ul>
-					</div>
+				<div className="navbar_links">
+					<ul className="menu">
+						<li><a href="#">Referral</a></li>
+						<li><a href="#">Rule</a></li>
+						<li><a href="#">How To Play</a></li>
+						<li><a href="#">Login</a></li>
+					
+					</ul>
+				</div>
 
-			</header>
-
-            </div>
-        );
-
+			</div>
+		);
 
 
-    }
+
+	}
 }
 
 export default Header;
