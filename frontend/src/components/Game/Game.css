@@ -10,7 +10,7 @@
 
 }
   .Game .container {
-    background: url("./images/Game_board_wCards.png");
+    /* background: url("./images/Game_board_wCards.png"); */
     background-repeat: no-repeat;
     background-position: 50% 50%; 
     background-size: contain;
