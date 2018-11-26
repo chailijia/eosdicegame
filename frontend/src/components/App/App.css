@@ -12,8 +12,15 @@
   font-style: normal;
 }
 
+@font-face {
+  font-family: 'Noteworthy';
+  src: url("./fonts/Noteworthy.ttf");
+  font-weight: normal;
+  font-style: normal;
+}
+
 body {
-  font-family: 'Almendra Bold';
+  font-family: 'Noteworthy';
   font-size: 14px;
   letter-spacing: 2px;
   user-select: none;

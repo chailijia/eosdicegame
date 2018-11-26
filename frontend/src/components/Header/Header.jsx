@@ -24,10 +24,11 @@ class Header extends Component {
 						<a href="https://twitter.com/?lang=en"><img src={twitter_icon} alt=" " className="icon" /></a>
 						<a href="https://telegram.org/"><img src={telegram_icon} alt=" " className="icon" /></a>
 
-						<li><a href="#">Referral</a></li>
-						<li><a href="#">Rule</a></li>
-						<li><a href="#">How To Play</a></li>
-						<li><a href="#">Login</a></li>
+						<li className="menu_link"><a href="#" >Referral</a></li>
+						<li className="menu_link"><a href="#" >Rule</a></li>
+						<li className="menu_link"><a href="#" >How To Play</a></li>
+						{/* <li><a href="#" className="Login_button">Login</a></li> */}
+						<li><button className="Login_button">Login</button></li>
 					</ul>
 				</nav>
 
