@@ -1,8 +1,9 @@
 import { ActionTypes } from 'const';
+import { UserAction } from 'actions';
 
 const initialState = {
   name: "",
-//   win_count: 0,
+  win_count: 0,
 //   lost_count: 0,
 //   game: null,
 };
@@ -20,6 +21,16 @@ export default function (state = initialState, action) {
         // win_count: action.win_count || initialState.win_count,
         // lost_count: action.lost_count || initialState.lost_count,
         // game: action.game || initialState.game,    
+      });
+    }
+
+    case ActionTypes.LOGIN:{
+      console.log("tam_ ActionTypes.LOGIN", state);
+
+      UserAction.demo("hoang");
+
+      return Object.assign({}, state, {
+        win_count: 5,
       });
     }
     default:

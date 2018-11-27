@@ -1,4 +1,8 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
+
+// Services and redux action
+import { UserAction } from 'actions';
 
 import logo from './images/logo.png'
 import fb_icon from './images/FB.svg'
@@ -8,6 +12,26 @@ import twitter_icon from './images/TWITTER.svg'
 import telegram_icon from './images/TELEGRAM.svg'
 
 class Header extends Component {
+
+	constructor(props) {
+		super(props);
+		this.handleLoginClick = this.handleLoginClick.bind(this);
+		this.handleClick = this.handleClick.bind(this);
+	
+	  }
+
+	  handleLoginClick(e) {
+		console.log("tam_", );
+		const { Login } = this.props;
+		Login();
+
+	  }
+
+	  handleClick(e){
+		  console.log("tam_ result click");
+
+	  }
+
 	render() {
 		return (
 			<div className="navbar">
@@ -26,9 +50,8 @@ class Header extends Component {
 
 						<li className="menu_link"><a href="#" >Referral</a></li>
 						<li className="menu_link"><a href="#" >Rule</a></li>
-						<li className="menu_link"><a href="#" >How To Play</a></li>
-						{/* <li><a href="#" className="Login_button">Login</a></li> */}
-						<li><button className="Login_button">Login</button></li>
+						<li className="menu_link"><a href="#" onClick={this.handleClick}>How To Play</a></li>
+						<li><button className="Login_button" onClick={this.handleLoginClick}>Login</button></li>
 					</ul>
 				</nav>
 
@@ -40,5 +63,12 @@ class Header extends Component {
 	}
 }
 
-export default Header;
+// Map all state to component props (for redux to connect)
+const mapStateToProps = state => state;
 
+// Map the following action to props
+const mapDispatchToProps = {
+	Login: UserAction.Login,
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Header);

@@ -12,6 +12,19 @@ class UserAction {
     }
   }
 
+  static Login(){
+    console.log("tam_ static Login");
+    return {
+      type: ActionTypes.LOGIN,
+    }
+  }
+  static demo({name}){
+    console.log("tam_ demo", name);
+    return{
+      name,
+    }
+  }
+
 }
 
 export default UserAction;
