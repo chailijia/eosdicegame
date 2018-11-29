@@ -29,6 +29,8 @@ class Header extends Component {
 
 	  handleClick(e){
 		  console.log("tam_ result click");
+		  const { user: { win_count } } = this.props;
+		  console.log('tam_ ', win_count);
 
 	  }
 
