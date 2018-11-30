@@ -4,6 +4,8 @@ import { connect } from 'react-redux';
 // Services and redux action
 import { UserAction } from 'actions';
 
+import { ApiService } from 'services';
+
 import logo from './images/logo.png'
 import fb_icon from './images/FB.svg'
 import mail_icon from './images/MAIL.svg'
@@ -25,13 +27,14 @@ class Header extends Component {
 		const { Login } = this.props;
 		Login();
 
+		ApiService.LoginScatter();
+
 	  }
 
 	  handleClick(e){
 		  console.log("tam_ result click");
 		  const { user: { win_count } } = this.props;
 		  console.log('tam_ ', win_count);
-
 	  }
 
 	render() {
