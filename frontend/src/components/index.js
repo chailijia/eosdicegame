@@ -8,6 +8,8 @@ import GameMat from './GameMat'
 import HandCards from './HandCards'
 import Game from './Game'
 import Header from './Header'
+import BetTable from './BetTable'
+import RollingDice from './RollingDice'
 
 
 export {
@@ -21,4 +23,6 @@ export {
   HandCards,
   Game,
   Header,
+  BetTable,
+  RollingDice
 }

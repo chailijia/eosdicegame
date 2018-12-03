@@ -1,18 +1,18 @@
 // React core
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-
 // Components
-import { Login, Card, GameInfo, PlayerInfo, GameMat, Game, Header } from 'components';
+import { Login, Card, GameInfo, PlayerInfo, GameMat, Game, Header,BetTable } from 'components';
 
 class App extends Component {
 
   render() {
     return (
       <div className="App">
-      <Header/>      
+      <Header/>  
+      <BetTable/>    
       <Game/>
-
+      
       </div>
     );
   }

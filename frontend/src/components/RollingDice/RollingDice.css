@@ -1,0 +1,126 @@
+
+ .goto_dice1{
+    background:url(dice.png);
+    height:147px;width:147px;
+    background-position:-333px -63px;
+    background-repeat:no-repeat;
+    position: absolute;
+    left: 400px;
+    top: 350px;
+   
+    -webkit-animation-name: dice1transform; /* Safari 4.0 - 8.0 */
+     -webkit-animation-duration: 1s; /* Safari 4.0 - 8.0 */
+     /* -webkit-animation-iteration-count: infinite;  */
+     -webkit-animation-timing-function: linear;
+   
+     animation-name: dice1transform;
+     animation-duration: 1s;
+     /* animation-iteration-count: infinite; */
+     animation-timing-function: linear;
+    }
+   
+     .goto_dice2{
+    background:url(dice.png);
+    height:147px;width:147px;
+    background-position:-45px -45px;
+    background-repeat:no-repeat;
+    position: absolute;
+    left: 600px;
+    top: 350px;
+   
+    -webkit-animation-name: dice2transform; /* Safari 4.0 - 8.0 */
+     -webkit-animation-duration: 1s; /* Safari 4.0 - 8.0 */
+     /* -webkit-animation-iteration-count: infinite;  */
+     -webkit-animation-timing-function: linear;
+   
+     animation-name: dice2transform;
+     animation-duration: 1.2s;
+     /* animation-iteration-count: infinite; */
+     animation-timing-function: linear;
+    }
+   
+     .goto_dice3{
+    background:url(dice.png);
+    height:147px;width:147px;
+    background-position:-45px -45px;
+    background-repeat:no-repeat;
+    position: absolute;
+    left: 800px;
+    top: 350px;
+   
+    -webkit-animation-name: dice3transform; /* Safari 4.0 - 8.0 */
+     -webkit-animation-duration: 1.4s; /* Safari 4.0 - 8.0 */
+     /* -webkit-animation-iteration-count: infinite;  */
+     -webkit-animation-timing-function: linear;
+   
+     animation-name: dice3transform;
+     animation-duration: 1s;
+     /* animation-iteration-count: infinite; */
+     animation-timing-function: linear;
+    }
+   
+   /* Safari 4.0 - 8.0 */
+   @-webkit-keyframes dice1transform {
+     from { -webkit-transform: rotate(0deg) translateX(150px) rotate(0deg); }
+     to   { -webkit-transform: rotate(360deg) translateX(150px) rotate(-360deg); }
+   }
+   
+   /* Standard syntax */
+   @keyframes dice1transform {
+     /* from { transform: rotate(0deg) translateX(150px) rotate(0deg); }
+     to   { transform: rotate(360deg) translateX(150px) rotate(-360deg); } */
+   
+       0%,10%      {background-position:-86px -922px}
+       10.01%,20%  {background-position:-377px -922px}
+       20.01%,30%  {background-position:-654px -921px}
+       30.01%,40%  {background-position:-947px -938px}
+   
+       40.01%,50% {background-position:-1242px -936px}
+   
+       50.01%,60% {background-position:-1523px -936px}
+       60.01%,70% {background-position:-85px -1172px}
+       
+       70.01%,80% {background-position:-375px -1172px}  
+       80.01%,90% {background-position:-654px -1173px}
+       90.01%,100% {background-position:-935px -1178px}
+   }
+ 
+     /* Standard syntax */
+     @keyframes dice2transform {
+       /* from { transform: rotate(0deg) translateX(150px) rotate(0deg); }
+       to   { transform: rotate(360deg) translateX(150px) rotate(-360deg); } */
+     
+       0%,10%      {background-position:-86px -922px}
+       10.01%,20%  {background-position:-377px -922px}
+       20.01%,30%  {background-position:-654px -921px}
+       30.01%,40%  {background-position:-947px -938px}
+   
+       40.01%,50% {background-position:-1242px -936px}
+   
+       50.01%,60% {background-position:-1523px -936px}
+       60.01%,70% {background-position:-85px -1172px}
+       
+       70.01%,80% {background-position:-375px -1172px}  
+       80.01%,90% {background-position:-654px -1173px}
+       90.01%,100% {background-position:-935px -1178px}
+     }
+ 
+         /* Standard syntax */
+     @keyframes dice3transform {
+       /* from { transform: rotate(0deg) translateX(150px) rotate(0deg); }
+       to   { transform: rotate(360deg) translateX(150px) rotate(-360deg); } */
+         
+       0%,10%      {background-position:-86px -922px}
+       10.01%,20%  {background-position:-377px -922px}
+       20.01%,30%  {background-position:-654px -921px}
+       30.01%,40%  {background-position:-947px -938px}
+   
+       40.01%,50% {background-position:-1242px -936px}
+   
+       50.01%,60% {background-position:-1523px -936px}
+       60.01%,70% {background-position:-85px -1172px}
+       
+       70.01%,80% {background-position:-375px -1172px}  
+       80.01%,90% {background-position:-654px -1173px}
+       90.01%,100% {background-position:-935px -1178px}
+       }
