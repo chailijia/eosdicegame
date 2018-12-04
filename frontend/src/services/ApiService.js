@@ -53,11 +53,20 @@ class ApiService {
 
         //connect to scatter
         Scatter.scatter.getIdentity({accounts: [MAIN_NETWORK]});
-        console.log('tam_ in scattter', ApiService.hasIdentity());
     }
 
     static hasIdentity() { 
-        return Scatter.scatter.identity;
+		Scatter.scatter.connect(Scatter.Blockchains.EOS).then(connected => {
+		  if(connected){
+			  window.ScatterJS = null;
+          }
+          return Scatter.scatter.identity;
+        });
+        
+        
+    }
+    static LogOutScatter() { 
+        Scatter.scatter.forgetIdentity();
     }
 
 

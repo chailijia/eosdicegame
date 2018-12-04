@@ -16,12 +16,22 @@ import medium_icon from './images/MEDIUM.svg'
 import twitter_icon from './images/TWITTER.svg'
 import telegram_icon from './images/TELEGRAM.svg'
 
+const { Blockchains } = ScatterJS
+
+export const MAIN_NETWORK = {
+	blockchain: Blockchains.EOS,
+	protocol: 'https',
+	host: 'nodes.get-scatter.com',
+	port: 443,
+	chainId: 'aca376f206b8fc25a6ed44dbdc66547c36c6c33e3a119ffbeaef943642f0e906'
+}
+
 class Header extends Component {
 
 	constructor(props) {
 		super(props);
 		this.state = {
-			LoginStatus: 'LogIn',
+			LoginStatus: false,
 		}
 		this.handleLoginClick = this.handleLoginClick.bind(this);
 		this.handleClick = this.handleClick.bind(this);
@@ -30,31 +40,70 @@ class Header extends Component {
 	}
 	//before render
 	componentWillMount() {
-		ScatterJS.plugins( new ScatterEOS() );
 		ScatterJS.scatter.connect(ScatterJS.Blockchains.EOS).then(connected => {
-		  if(connected){
-			  window.ScatterJS = null;
-		  }
-		  if(ScatterJS.scatter.identity){
-			  this.setState({
-				LoginStatus: 'LogOut',
-			});
-		  }
+			if (connected) {
+				window.ScatterJS = null;
+			}
+			if (ScatterJS.scatter.identity) {
+				this.setState({
+					LoginStatus: true,
+				});
+			}
 		});
-
 	}
 	//after render
 	componentDidMount() {
 	}
 
+
 	handleLoginClick(e) {
 		console.log("tam_");
 		const { Login } = this.props;
 		Login();
+		if (this.state.LoginStatus) {
+			// ApiService.LogOutScatter();
+			// this.setState({
+			// 	LoginStatus: false,
+			// });
+			ScatterJS.scatter.connect(ScatterJS.Blockchains.EOS).then(connected => {
+				if (connected) {
+					window.ScatterJS = null;
+				}
+				ScatterJS.scatter.forgetIdentity();
+				this.setState({
+					LoginStatus: false,
+				});
+			});
 
-		ApiService.LoginScatter();
+		} else {
+			// ApiService.LoginScatter();
+			// this.setState({
+			// 	LoginStatus: true,
+			// });
+			const connected = ScatterJS.scatter.connect(ScatterJS.Blockchains.EOS)
+
+			if (!connected) {
+				console.log('tam_ SCATTER NOT Connect')
+				alert("Scatter NOT find")
+				return
+			}
+			const win = window
+			win.ScatterJS = win.ScatterEOS = win.scatter = undefined
+
+			//If it connected to scatter, forget its Identify
+			// if(Scatter.scatter.identity){
+			//     Scatter.scatter.forgetIdentity()
+			// }
+
+			//connect to scatter
+			ScatterJS.scatter.getIdentity({ accounts: [MAIN_NETWORK] });
+			this.setState({
+				LoginStatus: true,
+			});
+		}
 
 	}
+
 
 	handleClick(e) {
 		console.log("tam_ result click");
@@ -81,7 +130,7 @@ class Header extends Component {
 						<li className="menu_link"><a href="#" >Referral</a></li>
 						<li className="menu_link"><a href="#" >Rule</a></li>
 						<li className="menu_link"><a href="#" onClick={this.handleClick}>How To Play</a></li>
-						<li><button className="Login_button" onClick={this.handleLoginClick}>{this.state.LoginStatus}</button></li>
+						<li><button className="Login_button" onClick={this.handleLoginClick}>{this.state.LoginStatus ? 'LogOut' : 'LogIn'}</button></li>
 					</ul>
 				</nav>
 
