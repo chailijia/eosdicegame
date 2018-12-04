@@ -2,7 +2,7 @@ import { ActionTypes } from 'const';
 import { UserAction } from 'actions';
 
 const initialState = {
-  name: "",
+  name: '',
   win_count: 0,
 //   lost_count: 0,
 //   game: null,

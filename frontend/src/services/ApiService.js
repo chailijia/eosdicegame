@@ -47,15 +47,16 @@ class ApiService {
         win.ScatterJS = win.ScatterEOS = win.scatter = undefined
 
         //If it connected to scatter, forget its Identify
-        if(Scatter.scatter.identity){
-            Scatter.scatter.forgetIdentity()
-        }
+        // if(Scatter.scatter.identity){
+        //     Scatter.scatter.forgetIdentity()
+        // }
 
         //connect to scatter
         Scatter.scatter.getIdentity({accounts: [MAIN_NETWORK]});
+        console.log('tam_ in scattter', ApiService.hasIdentity());
     }
 
-    static hasIdentity() {
+    static hasIdentity() { 
         return Scatter.scatter.identity;
     }
 

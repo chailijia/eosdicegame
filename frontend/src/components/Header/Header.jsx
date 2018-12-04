@@ -6,6 +6,9 @@ import { UserAction } from 'actions';
 
 import { ApiService } from 'services';
 
+import ScatterJS from 'scatterjs-core';
+import ScatterEOS from 'scatterjs-plugin-eosjs';
+
 import logo from './images/logo.png'
 import fb_icon from './images/FB.svg'
 import mail_icon from './images/MAIL.svg'
@@ -17,27 +20,57 @@ class Header extends Component {
 
 	constructor(props) {
 		super(props);
+		this.state = {
+			LoginStatus: 'LogIn',
+		}
 		this.handleLoginClick = this.handleLoginClick.bind(this);
 		this.handleClick = this.handleClick.bind(this);
-	
-	  }
+		console.log('tam_', ApiService.hasIdentity());
 
-	  handleLoginClick(e) {
-		console.log("tam_", );
+	}
+
+	componentWillMount() {
+		console.log('tam_ begin app', ApiService.hasIdentity());
+
+		ScatterJS.plugins( new ScatterEOS() );
+		ScatterJS.scatter.connect(ScatterJS.Blockchains.EOS).then(connected => {
+			console.log('tam__ 1', connected)
+		  if(connected){
+			  
+			  window.ScatterJS = null;
+		  }
+		  console.log('tam__ 2', ScatterJS.scatter.identity)
+		});
+
+		// console.log('tam__ 3', ScatterJS.scatter.identity)
+
+
+		// this.state.LoginStatus = 'test';
+
+	}
+
+	componentDidMount() {
+		console.log('tam_ next', ApiService.hasIdentity());
+	}
+
+	handleLoginClick(e) {
+		console.log("tam_");
 		const { Login } = this.props;
 		Login();
 
 		ApiService.LoginScatter();
 
-	  }
+	}
 
-	  handleClick(e){
-		  console.log("tam_ result click");
-		  const { user: { win_count } } = this.props;
-		  console.log('tam_ ', win_count);
-	  }
+	handleClick(e) {
+		console.log("tam_ result click");
+		const { user: { win_count, name } } = this.props;
+		console.log('tam_ 22', win_count, name);
+		console.log('tam_ 22', ApiService.hasIdentity());
+	}
 
 	render() {
+
 		return (
 			<div className="navbar">
 
@@ -47,16 +80,14 @@ class Header extends Component {
 
 				<nav className="navbar_links">
 					<ul className="menu">
-						<a href="https://www.facebook.com/"><img src={fb_icon} alt=" " className="icon" /></a>
 						<a href="https://mail.google.com/"><img src={mail_icon} alt=" " className="icon" /></a>
 						<a href="https://medium.com/"><img src={medium_icon} alt=" " className="icon" /></a>
-						<a href="https://twitter.com/?lang=en"><img src={twitter_icon} alt=" " className="icon" /></a>
 						<a href="https://telegram.org/"><img src={telegram_icon} alt=" " className="icon" /></a>
 
 						<li className="menu_link"><a href="#" >Referral</a></li>
 						<li className="menu_link"><a href="#" >Rule</a></li>
 						<li className="menu_link"><a href="#" onClick={this.handleClick}>How To Play</a></li>
-						<li><button className="Login_button" onClick={this.handleLoginClick}>Login</button></li>
+						<li><button className="Login_button" onClick={this.handleLoginClick}>{this.state.LoginStatus}</button></li>
 					</ul>
 				</nav>
 
