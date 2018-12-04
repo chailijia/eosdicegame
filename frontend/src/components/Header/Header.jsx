@@ -28,29 +28,23 @@ class Header extends Component {
 		console.log('tam_', ApiService.hasIdentity());
 
 	}
-
+	//before render
 	componentWillMount() {
-		console.log('tam_ begin app', ApiService.hasIdentity());
-
 		ScatterJS.plugins( new ScatterEOS() );
 		ScatterJS.scatter.connect(ScatterJS.Blockchains.EOS).then(connected => {
-			console.log('tam__ 1', connected)
 		  if(connected){
-			  
 			  window.ScatterJS = null;
 		  }
-		  console.log('tam__ 2', ScatterJS.scatter.identity)
+		  if(ScatterJS.scatter.identity){
+			  this.setState({
+				LoginStatus: 'LogOut',
+			});
+		  }
 		});
 
-		// console.log('tam__ 3', ScatterJS.scatter.identity)
-
-
-		// this.state.LoginStatus = 'test';
-
 	}
-
+	//after render
 	componentDidMount() {
-		console.log('tam_ next', ApiService.hasIdentity());
 	}
 
 	handleLoginClick(e) {
