@@ -3,11 +3,9 @@ import { connect } from 'react-redux';
 
 // Services and redux action
 import { UserAction } from 'actions';
-
 import { ApiService } from 'services';
 
 import ScatterJS from 'scatterjs-core';
-import ScatterEOS from 'scatterjs-plugin-eosjs';
 
 import logo from './images/logo.png'
 import fb_icon from './images/FB.svg'
@@ -96,9 +94,14 @@ class Header extends Component {
 			// }
 
 			//connect to scatter
-			ScatterJS.scatter.getIdentity({ accounts: [MAIN_NETWORK] });
-			this.setState({
-				LoginStatus: true,
+			const res = ScatterJS.scatter.getIdentity({ accounts: [MAIN_NETWORK] }).then(res => {
+				console.log('tam_ res', res)
+				if(res){
+					this.setState({
+						LoginStatus: true,
+					});
+
+				}
 			});
 		}
 
