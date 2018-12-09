@@ -11,12 +11,14 @@ class App extends Component {
     return (
       <div className="App">
         <Header />
-          <div className="dice_board">
+        <div className="dice_board">
+        <div className="dice_board_center">
             <DiceBoard />
-          </div>
-          <div className="dice_table">
-            <BetTable />
-          </div>
+            </div>
+        </div>
+        <div className="dice_table">
+          <BetTable />
+        </div>
       </div>
     );
   }

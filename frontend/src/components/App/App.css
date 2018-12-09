@@ -32,13 +32,21 @@ body {
   /* background-image: url("./images/Game_background.jpg"); */
   /* background-size: cover; */
   background: #171933;
+  display:block;
 }
 
 .dice_board{
-  width:800px;
-  height: 410px;
+  min-width:800px;
+  height: 400px;
+  width:60%;
   display:inline-block;
-  /* background-color: blue; */
+  margin: 0 auto;
+  text-align:center;
+}
+
+.dice_board_center{
+  display: block;
+  margin: 0 auto;
 }
 .dice_table{
   width:500px;
