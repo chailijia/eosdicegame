@@ -1,0 +1,226 @@
+.dice_x_item{
+    background: url("./images/dice_w.png") no-repeat;
+    width: 56px;
+    height: 57px;
+    float: left;
+}
+
+.dice_x_num1{
+    background-position:-1px 0px;
+}
+
+.dice_x_num2{
+    background-position:-57px 0px;
+}
+
+.dice_x_num3{
+    background-position:-112px 0px;
+}
+.dice_x_num4{
+    background-position:-168px 0px;
+}
+
+.dice_x_num5{
+    background-position:-224px 0px;
+}
+
+.dice_x_num6{
+    background-position:-281px 0px;
+}
+
+
+.dice_md_item{
+    background: url("./images/dice_md.png") no-repeat ;
+    width: 41px;
+    height: 41px;
+    float: left;
+}
+
+.dice_md_num1{
+    background-position:0px -1px;
+}
+
+.dice_md_num2{
+    background-position:-41px -1px;
+}
+
+.dice_md_num3{
+    background-position:-82px -1px;
+}
+.dice_md_num4{
+    background-position:-122px -2px;
+}
+
+.dice_md_num5{
+    background-position:-162px -2px;
+}
+
+.dice_md_num6{
+    background-position:-202px -2px;
+}
+
+.dice_sm_item{
+    background: url("./images/dice_sm.png") no-repeat;
+    width: 32px;
+    height: 33px;
+    float: left;
+}
+
+.dice_sm_num1{
+    background-position:-2px -2px;
+}
+
+.dice_sm_num2{
+    background-position:-34px -2px;
+}
+
+.dice_sm_num3{
+    background-position:-66px -2px;
+}
+.dice_sm_num4{
+    background-position:-97px -2px;
+}
+
+.dice_sm_num5{
+    background-position:-129px -2px;
+}
+
+.dice_sm_num6{
+    background-position:-162px -2px;
+}
+
+.list_chip
+{
+    position: absolute;
+    top: 15px;
+    left: 200px;
+    z-index: 3;
+}
+.chip
+{
+    width: 44px;
+    height: 44px;
+    background: url("./images/chip_small.png") no-repeat;
+    float: left;
+    cursor: pointer;
+    position: relative;
+    top: -10px;
+    margin-right: 10px;
+}
+.chip.enabled
+{
+    opacity: 1;
+}
+.chip.disabled
+{
+    opacity: 0.3;
+}
+.list_chip .chip.motk
+{
+    background-position: 0px 0px;
+}
+.list_chip .chip.namk
+{
+    background-position: -44px 0px;
+}
+.list_chip .chip.muoik
+{
+    background-position: -90px 0px;
+}
+.list_chip .chip.nammuoi
+{
+    background-position: -134px 0px;
+}
+.list_chip .chip.mottram
+{
+    background-position: -178px 0px;
+}
+.chip.namtram
+{
+    background-position: -224px 0px;
+}
+.chip.mottrieu
+{
+    background-position: -269px 0px;
+}
+chip.namtrieu
+{
+    background-position: -314px 0px;
+}
+
+.chip_small
+{
+    width: 25px;
+    height: 25px;
+    background: url("./images/chip_small.png") no-repeat;
+    float: left;
+    cursor: pointer;
+    position: relative;
+    top: -10px;
+    margin-right: 10px;
+}
+
+.desc {
+    display: none;
+    width: 161px;
+    height: 50px;
+    position: absolute;
+    z-index: 5;
+    color: white;
+    font-weight: bold;
+    background: url(./images/bg_desc.png) no-repeat;
+    text-shadow: 0px 1px 1px rgba(0,0,0,0.75);
+    top: -52px;
+    left: 0px;
+}
+
+.desc .top_cuoc
+{
+    display: none;
+}
+
+.desc.top .right
+{
+    background-position: -160px 0px;
+}
+.desc.top .top_cuoc
+{
+    display: block;
+}
+.desc.right
+{
+    top: -52px;
+    right: 0px;
+    left: auto;
+    background-position: -162px 0px;
+}
+.desc .title_cuoc
+{
+    width: 70px;
+    text-align: right;
+    float: left;
+    margin-right: 1px;
+}
+.desc .money
+{
+    width: 84px;
+    text-align: right;
+    float: right;
+    margin-right: 5px;
+    overflow: hidden;
+}
+.desc .total_cuoc
+{
+    margin-top: 2px;
+    float: left;
+    width: 160px;
+}
+.desc .top_cuoc
+{
+    float: left;
+    width: 160px;
+}
+.desc .user_cuoc
+{
+    float: left;
+}

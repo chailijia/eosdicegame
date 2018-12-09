@@ -1,0 +1,121 @@
+.DiceBoard {
+    top:20px;
+    height: 400px;
+    background: url("./images/dice3.png") no-repeat; 
+    position: relative;
+}
+
+/* .DiceBoardRow1 {
+    width:800px;
+    height:120px;
+    top:0px;
+    padding:26px 120px 0px 76px;
+    position: relative;
+    display:inline-block;
+} */
+.DiceBoardRow1 {
+    width:800px;
+    height:120px;
+    display: table;
+    position: relative;
+    padding:26px 120px 0px 76px;
+}
+/* .board-row{
+    justify-content: center;
+    align-items: center;
+} */
+.group1{
+    width: 70px;
+    display:inline-block;
+    text-align: center;
+    margin:3px;
+    /* background-color:#FF0000; */
+}
+
+
+ .ThreeDice{
+    width:140px;
+    height:86px;
+    display:inline-block;
+    text-align: center;
+    margin:3px;
+    /* background-color:#FF0000; */
+ }
+ .ThreeDice:hover{
+    background-color:#FF0000;
+ }
+
+ .DiceBoardRow2 {
+    width:665px;
+    height:120px;
+    display: table;
+    position: relative;
+    left:40px;
+    margin:3px;
+}
+.DiceBoardRow2Col{
+    display: table-cell;
+    width: 116px;
+    position: relative;
+    /* background-color:#FF0000; */
+}
+.DiceBoardRow2ColMid{
+    display: table-cell;
+    padding-left:3px;
+    padding-right:3px;
+    /* width: 421px; */
+    
+}
+ .group2{
+    width:55px;
+    display:inline-block;
+    text-align: center;
+    /* margin-bottom:5px;
+    margin-top:1px; */
+    margin-right:3px;
+    margin-left:3px;
+    border-radius:5px;
+    position: relative;
+    /* background-color:#FF0000; */
+}
+
+ .group3{
+    display:inline-block;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+    width:15%;
+    margin: 2px 2px;
+    position: relative;
+}
+.DiceBoardRow2Col:hover{
+    background-color:#ADFF2F;
+    border-radius: 3px;
+ }
+
+ .group4{
+    width:16.66%;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+    display:inline-block;
+    position: relative;
+}
+
+
+ .DiceBoardRow3 {
+    display:table;
+    width:420px;
+    top:7px;
+    left:165px;
+    position: relative;
+
+}
+
+.board-row2{
+    margin-top:3px;
+}
+.board-row3{
+    margin-top:6px;
+    /* margin-bottom:1px; */
+}

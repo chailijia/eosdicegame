@@ -33,3 +33,20 @@ body {
   /* background-size: cover; */
   background: #171933;
 }
+
+.dice_board{
+  width:800px;
+  height: 410px;
+  display:inline-block;
+  /* background-color: blue; */
+}
+.dice_table{
+  width:500px;
+  height: 400px;
+  /* background-color: red; */
+  display:inline-block;
+}
+.row{
+  position: relative;
+  display:inline-block;
+}
