@@ -5,7 +5,6 @@ class eosdicegame : public eosio::contract
 {
 
 private:
-
   enum game_status : int8_t
   {
     ONGOING = 0,
@@ -46,18 +45,29 @@ private:
     SINGLE_6 = 28,
   };
 
-  struct game_setting
-  {
-    uint64_t setting_id;
-    uint64_t setting_value;
+  const map<bet_case, bet_reward> bet_dict = {
+      {SMALL, 1, {BIG, 1}, {TRIPLE_ONE, 150}, {TRIPLE_TWO, 150}, {TRIPLE_THREE, 150}, {TRIPLE_FOUR, 150}, {TRIPLE_FIVE, 150}, {TRIPLE_SIX, 150}, {NUM_4, 150}, {NUM_5, 150}, {NUM_6, 150}, {NUM_7, 150}, {NUM_8, 150}, {NUM_9, 150}, {NUM_10, 150}, {NUM_11, 150}, {NUM_12, 150}, {NUM_13, 150}, {NUM_14, 150}, {NUM_15, 150}, {NUM_16, 150}, {NUM_17, 150}, {SINGLE_1, 1}, {SINGLE_2, 1}, {SINGLE_3, 1}, {SINGLE_4, 1}, {SINGLE_5, 1}, {SINGLE_6, 1}}};
 
-    EOSLIB_SERIALIZE(game_setting, (setting_id)(setting_value))
+  struct st_transfer
+  {
+    account_name from;
+    account_name to;
+    asset quantity;
+    std::string memo;
   };
 
-  typedef eosio::multi_index<N(game_setting), game_setting> game_setting_table
+  struct global
+  {
+    uint64_t id;
+    uint64_t value;
 
-  // @abi table players i64
-  struct player
+    EOSLIB_SERIALIZE(global, (id)(value))
+  };
+
+  typedef eosio::multi_index<N(globals), global> global_table
+
+      // @abi table players i64
+      struct player
   {
     account_name bettor;
     account_name referral;
@@ -102,8 +112,9 @@ private:
     uint64_t bet_case;
     asset bet_amount;
     bool active;
+    time_point_sec bet_at;
 
-    EOSLIB_SERIALIZE(bet, (bet_id)(bet_round)(bettor)(bet_case)(bet_amount)(active))
+    EOSLIB_SERIALIZE(bet, (bet_id)(bet_round)(bettor)(bet_case)(bet_amount)(active)(bet_at))
   };
 
   typedef eosio::multi_index<N(seed), seed> seed_table;
@@ -111,7 +122,7 @@ private:
   players_table _players;
   games_table _games;
   game_setting_table _game_setting;
-  global_singleton _global;
+  global_table _global;
   global_item _global_state;
 
 public:

@@ -1,5 +1,14 @@
 #include "dicegame.hpp"
 
+#define GLOBAL_ID_BET 101
+#define GLOBAL_ID_HISTORY_INDEX 104
+#define GLOBAL_ID_LARGE_HISTORY_INDEX 105
+#define GLOBAL_ID_HIGH_ODDS_HISTORY_INDEX 106
+#define GLOBAL_ID_ACTIVE 109
+#define GLOBAL_ID_CURRENT_ROUND 110
+
+#define SINGLE_BET_MAX_PERCENT 5
+
 namespace dicegame
 {
 dicegame::dicegame(account_name name)
@@ -45,7 +54,13 @@ void dicegame::transfer(uint64_t sender, uint64_t receiver)
     eosio_assert(transfer_data.quantity.is_valid(), "Invalid token transfer");
     eosio_assert(transfer_data.quantity.amount > 0, "Quantity must be positive");
 
-    // todo add bill
+    auto active_pos = _globals.find(GLOBAL_ID_ACTIVE);
+    eosio_assert(active_pos != _globals.end() && active_pos->vavaluel, "Maintaining ...");
+
+    eosio::token bet_token("eosio.token");
+    eosio::asset contract_balance = bet_token.get_balance(_self, transfer_data.quantity.symbol);
+    int64_t max = (balance.amount * SINGLE_BET_MAX_PERCENT / 100);
+    eosio_assert(transfer_data.quantity <= max, "Bet amount exceeds");
 
     const std::size_t first_break = transfer_data.memo.find("-");
     const std::size_t second_break = transfer_data.find('-', first_break + 1);
@@ -61,27 +76,22 @@ void dicegame::transfer(uint64_t sender, uint64_t receiver)
         referral = possible_ref;
     }
 
-    const uint64_t bet_num = std::stoull(bet_str, 0, 10);
+    const uint64_t bet_case = std::stoull(bet_str, 0, 10);
+    eosio_assert( bet_case >= 0 && bet_case <= 28, "Bet number must be >= 0, <= 28.");
+
+    auto global_itr = _globals.find(GLOBAL_ID_CURRENT_ROUND);
+      eosio_assert(global_itr != _globals.end(), "Unknown global id");
+      uint64_t current_round = global_itr->val;
     // Todo: check bet_num by eosio_assert
 
-    // Todo: check maximum amount player can reach, it should be less than Max_amount
-
-    // get transaction id
-    auto s = read_transaction(nullptr, 0);
-    char *tx = (char *)malloc(s);
-    read_transaction(tx, s);
-    checksum256 tx_hash;
-    sha256(tx, s, &tx_hash);
-
-    const uint64_t bet_id = ((uint64_t)tx_hash.hash[0] << 56) + ((uint64_t)tx_hash.hash[1] << 48) + ((uint64_t)tx_hash.hash[2] << 40) + ((uint64_t)tx_hash.hash[3] << 32) + ((uint64_t)tx_hash.hash[4] << 24) + ((uint64_t)tx_hash.hash[5] << 16) + ((uint64_t)tx_hash.hash[6] << 8) + (uint64_t)tx_hash.hash[7];
-
-    activebets.emplace(_self, [&](auto &bet) {
+    _bet.emplace(_self, [&](auto &bet) {
         bet.id = bet_id;
+        bet.bet_round = current_round;
         bet.bettor = transfer_data.from;
-        bet.referral = referral;
+        bet.bet_case = bet_case;
         bet.bet_amount = transfer_data.quantity.amount;
-        bet.bet_num = bet_num;
-        bet.bet_time = time_point_sec(now());
+        bet.active = bet_num;
+        bet.bet_at = time_point_sec(now());
     });
 }
 
@@ -133,6 +143,37 @@ void dicegame::endgame(account_name username)
 
 }; // namespace dicegame
 
+uint64_t dicegame::get_bet_reward(uint8_t bet_case, int64_t amount)
+{
+    return bet_dict.at(bet_case) * amount + amount;
+}
+
+// Simple Pseudo Random Number Algorithm, randomly pick a number within 0 to n-1
+int dicegame::random(const int range)
+{
+    // Find the existing seed
+    auto seed_iterator = _seed.begin();
+
+    // Initialize the seed with default value if it is not found
+    if (seed_iterator == _seed.end())
+    {
+        seed_iterator = _seed.emplace(_self, [&](auto &seed) {});
+    }
+
+    // Generate new seed value using the existing seed value
+    int prime = 65537;
+    auto new_seed_value = (seed_iterator->value + now()) % prime;
+
+    // Store the updated seed value in the table
+    _seed.modify(seed_iterator, _self, [&](auto &s) {
+        s.value = new_seed_value;
+    });
+
+    // Get the random result in desired range
+    int random_result = new_seed_value % range;
+    return random_result;
+}
+
 #define EOSIO_ABI_EX(TYPE, MEMBERS)                                                                             \
     extern "C"                                                                                                  \
     {                                                                                                           \
@@ -162,5 +203,4 @@ void dicegame::endgame(account_name username)
         }                                                                                                       \
     }
 
-EOSIO_ABI_EX(dicegame,(transfer)(startgame)(endgame)(setactived)(setglobal)(playgame)(nextround)(reveal))
-
+EOSIO_ABI_EX(dicegame, (transfer)(startgame)(endgame)(setactived)(setglobal)(playgame)(nextround)(reveal))
