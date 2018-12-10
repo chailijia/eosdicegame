@@ -2,7 +2,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 // Components
-import { Login, Card, GameInfo, PlayerInfo, GameMat, Game, Header, BetTable } from 'components';
+import { Header, BetTable } from 'components';
 import DiceBoard from 'components/DiceBoard/DiceBoard.jsx';
 
 class App extends Component {

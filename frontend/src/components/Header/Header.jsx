@@ -8,10 +8,8 @@ import { ApiService } from 'services';
 import ScatterJS from 'scatterjs-core';
 
 import logo from './images/logo.png'
-import fb_icon from './images/FB.svg'
 import mail_icon from './images/MAIL.svg'
 import medium_icon from './images/MEDIUM.svg'
-import twitter_icon from './images/TWITTER.svg'
 import telegram_icon from './images/TELEGRAM.svg'
 
 const { Blockchains } = ScatterJS
@@ -25,7 +23,6 @@ export const MAIN_NETWORK = {
 }
 
 class Header extends Component {
-
 	constructor(props) {
 		super(props);
 		this.state = {
@@ -33,8 +30,6 @@ class Header extends Component {
 		}
 		this.handleLoginClick = this.handleLoginClick.bind(this);
 		this.handleClick = this.handleClick.bind(this);
-		console.log('tam_', ApiService.hasIdentity());
-
 	}
 	//before render
 	componentWillMount() {
@@ -55,7 +50,6 @@ class Header extends Component {
 
 
 	handleLoginClick(e) {
-		console.log("tam_");
 		const { Login } = this.props;
 		Login();
 		if (this.state.LoginStatus) {
@@ -78,13 +72,30 @@ class Header extends Component {
 			// this.setState({
 			// 	LoginStatus: true,
 			// });
-			const connected = ScatterJS.scatter.connect(ScatterJS.Blockchains.EOS)
+			ScatterJS.scatter.connect(ScatterJS.Blockchains.EOS).then(connected =>{
+				console.log('tam_ connected', connected);
 
-			if (!connected) {
-				console.log('tam_ SCATTER NOT Connect')
-				alert("Scatter NOT find")
-				return
-			}
+				if (!connected) {
+					console.log('tam_ SCATTER NOT Connect')
+					alert("Scatter NOT find")
+					return
+				} else {
+					console.log('tam_ SCATTER Connect');
+					const win = window
+					win.ScatterJS = win.ScatterEOS = win.scatter = undefined
+					//connect to scatter
+					ScatterJS.scatter.getIdentity({ accounts: [MAIN_NETWORK] }).then(res => {
+						console.log('tam_ res', res)
+						if (res) {
+							this.setState({
+								LoginStatus: true,
+							});
+	
+						}
+					});
+				}
+			})
+
 			const win = window
 			win.ScatterJS = win.ScatterEOS = win.scatter = undefined
 
@@ -92,31 +103,16 @@ class Header extends Component {
 			// if(Scatter.scatter.identity){
 			//     Scatter.scatter.forgetIdentity()
 			// }
-
-			//connect to scatter
-			const res = ScatterJS.scatter.getIdentity({ accounts: [MAIN_NETWORK] }).then(res => {
-				console.log('tam_ res', res)
-				if(res){
-					this.setState({
-						LoginStatus: true,
-					});
-
-				}
-			});
 		}
 
 	}
-
-
 	handleClick(e) {
 		console.log("tam_ result click");
 		const { user: { win_count, name } } = this.props;
 		console.log('tam_ 22', win_count, name);
 		console.log('tam_ 22', ApiService.hasIdentity());
 	}
-
 	render() {
-
 		return (
 			<div className="navbar">
 
@@ -139,9 +135,6 @@ class Header extends Component {
 
 			</div>
 		);
-
-
-
 	}
 }
 
