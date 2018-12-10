@@ -1,8 +1,8 @@
-#include "eosdicegame.hpp"
+#include "dicegame.hpp"
 
-namespace eosdicegame
+namespace dicegame
 {
-eosdicegame::eosdicegame(account_name name)
+dicegame::dicegame(account_name name)
     : contract(name),
       _global(_self, _self),
       _players(_self, _self),
@@ -13,12 +13,12 @@ eosdicegame::eosdicegame(account_name name)
     _game_token_symbol = symbol_type(GAME_SYMBOL).name();
 }
 
-eosdicegame::~eosdicegame()
+dicegame::~dicegame()
 {
     _global.set(_global_state, _self);
 }
 
-global_item eosdicegame::get_default_parameters()
+global_item dicegame::get_default_parameters()
 {
     global_item global;
     global.currrent_round = 0;
@@ -27,7 +27,7 @@ global_item eosdicegame::get_default_parameters()
     return global;
 }
 
-void eosdicegame::transfer(uint64_t sender, uint64_t receiver)
+void dicegame::transfer(uint64_t sender, uint64_t receiver)
 {
     print("\n>>> sender >>>", sender, " - name: ", name{sender});
     print("\n>>> receiver >>>", receiver, " - name: ", name{receiver});
@@ -52,7 +52,7 @@ void eosdicegame::transfer(uint64_t sender, uint64_t receiver)
     std::string bet_str = transfer_data.memo.substr(0, first_break);
     std::string ref_str = transfer_data.memo.substr(first_break + 1, second_break - first_break - 1);
 
-    account_name referral = N(eosdicegame);
+    account_name referral = N(dicegame);
 
     const account_name possible_ref = eosio::string_to_name(ref_str.c_str());
 
@@ -85,13 +85,13 @@ void eosdicegame::transfer(uint64_t sender, uint64_t receiver)
     });
 }
 
-void lottery::setactived(bool actived)
+void dicegame::setactived(bool actived)
 {
     require_auth(_self);
     _global_state.active = actived;
 }
 
-void lottery::setstatus(uint64_t id, uint64_t val)
+void dicegame::setglobal(uint64_t id, uint64_t val)
 {
     require_auth(_self);
     auto pos = _game_setting.find(id);
@@ -110,7 +110,7 @@ void lottery::setstatus(uint64_t id, uint64_t val)
     }
 }
 
-void eosdicegame::startgame(account_name username)
+void dicegame::startgame(account_name username)
 {
     // Ensure this action is authorized by contract owner
     require_auth(self);
@@ -123,7 +123,7 @@ void eosdicegame::startgame(account_name username)
     });
 }
 
-void eosdicegame::endgame(account_name username)
+void dicegame::endgame(account_name username)
 {
     // Ensure this action is authorized by the player
     require_auth(self);
@@ -131,7 +131,7 @@ void eosdicegame::endgame(account_name username)
     // add action to stop game
 }
 
-}; // namespace eosdicegame
+}; // namespace dicegame
 
 #define EOSIO_ABI_EX(TYPE, MEMBERS)                                                                             \
     extern "C"                                                                                                  \
@@ -162,5 +162,5 @@ void eosdicegame::endgame(account_name username)
         }                                                                                                       \
     }
 
-EOSIO_ABI_EX(eosdicegame,(transfer)(startgame)(endgame)(setactived)(setstatus)(playgame)(nextround)(reveal))
+EOSIO_ABI_EX(dicegame,(transfer)(startgame)(endgame)(setactived)(setglobal)(playgame)(nextround)(reveal))
 
