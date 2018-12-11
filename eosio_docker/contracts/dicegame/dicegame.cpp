@@ -1,47 +1,31 @@
 #include "dicegame.hpp"
 
 #define GLOBAL_ID_BET 101
-#define GLOBAL_ID_HISTORY_INDEX 104
-#define GLOBAL_ID_LARGE_HISTORY_INDEX 105
-#define GLOBAL_ID_HIGH_ODDS_HISTORY_INDEX 106
-#define GLOBAL_ID_ACTIVE 109
-#define GLOBAL_ID_CURRENT_ROUND 110
+#define GLOBAL_ID_HISTORY_INDEX 102
+#define GLOBAL_ID_ACTIVE 103
+#define GLOBAL_ID_ROUND 104
+#define GLOBAL_ID_ROUND_DURATION 105
+#define GLOBAL_ID_ROUND_MAX_BETS 106
 
 #define SINGLE_BET_MAX_PERCENT 5
 
-namespace dicegame
-{
-dicegame::dicegame(account_name name)
-    : contract(name),
-      _global(_self, _self),
+
+dicegame::dicegame(account_name _self)
+    : contract(_self),
+      _globals(_self, _self),
       _players(_self, _self),
       _games(_self, _self),
-      _game_setting(_self, _self)
+      _bets(_self, _self),
+      _seed(_self, _self)
 {
-    _global_state = _global.exists() ? _global.get() : get_default_parameters();
-    _game_token_symbol = symbol_type(GAME_SYMBOL).name();
-}
-
-dicegame::~dicegame()
-{
-    _global.set(_global_state, _self);
-}
-
-global_item dicegame::get_default_parameters()
-{
-    global_item global;
-    global.currrent_round = 0;
-    global.active = false;
-    global.total_users = 0;
-    return global;
 }
 
 void dicegame::transfer(uint64_t sender, uint64_t receiver)
 {
-    print("\n>>> sender >>>", sender, " - name: ", name{sender});
-    print("\n>>> receiver >>>", receiver, " - name: ", name{receiver});
+    print("\n>>> sender >>>", sender, " - name: ", eosio::name{sender});
+    print("\n>>> receiver >>>", receiver, " - name: ", eosio::name{receiver});
 
-    auto transfer_data = unpack_action_data<st_transfer>();
+    auto transfer_data = eosio::unpack_action_data<st_transfer>();
     if (transfer_data.from == _self || transfer_data.to != _self)
     {
         return;
@@ -49,21 +33,20 @@ void dicegame::transfer(uint64_t sender, uint64_t receiver)
 
     print("\n>>> transfer data quantity >>> ", transfer_data.quantity);
 
-    eosio_assert(transfer_data.quantity.symbol == string_to_symbol(4, "EOS"),
-                 "Only accepts EOS");
+    eosio_assert(transfer_data.quantity.symbol == eosio::string_to_symbol(4, "EOS"), "Only accepts EOS");
     eosio_assert(transfer_data.quantity.is_valid(), "Invalid token transfer");
     eosio_assert(transfer_data.quantity.amount > 0, "Quantity must be positive");
 
     auto active_pos = _globals.find(GLOBAL_ID_ACTIVE);
-    eosio_assert(active_pos != _globals.end() && active_pos->vavaluel, "Maintaining ...");
+    eosio_assert(active_pos != _globals.end() && active_pos->val, "Maintaining ...");
 
-    eosio::token bet_token("eosio.token");
-    eosio::asset contract_balance = bet_token.get_balance(_self, transfer_data.quantity.symbol);
-    int64_t max = (balance.amount * SINGLE_BET_MAX_PERCENT / 100);
-    eosio_assert(transfer_data.quantity <= max, "Bet amount exceeds");
+    // eosio::token bet_token("eosio.token");
+    // eosio::asset contract_balance = bet_token.get_balance(_self, transfer_data.quantity.symbol);
+    // int64_t max = (balance.amount * SINGLE_BET_MAX_PERCENT / 100);
+    // eosio_assert(transfer_data.quantity <= max, "Bet amount exceeds");
 
     const std::size_t first_break = transfer_data.memo.find("-");
-    const std::size_t second_break = transfer_data.find('-', first_break + 1);
+    const std::size_t second_break = transfer_data.memo.find('-', first_break + 1);
     std::string bet_str = transfer_data.memo.substr(0, first_break);
     std::string ref_str = transfer_data.memo.substr(first_break + 1, second_break - first_break - 1);
 
@@ -76,46 +59,75 @@ void dicegame::transfer(uint64_t sender, uint64_t receiver)
         referral = possible_ref;
     }
 
-    const uint64_t bet_case = std::stoull(bet_str, 0, 10);
-    eosio_assert( bet_case >= 0 && bet_case <= 28, "Bet number must be >= 0, <= 28.");
+    const int64_t bet_case = std::stoull(bet_str, 0, 10);
+    eosio_assert((bet_case >= 0) && (bet_case <= 28), "Bet number must be >= 0, <= 28.");
 
-    auto global_itr = _globals.find(GLOBAL_ID_CURRENT_ROUND);
-      eosio_assert(global_itr != _globals.end(), "Unknown global id");
-      uint64_t current_round = global_itr->val;
+    auto round_itr = _globals.find(GLOBAL_ID_ROUND);
+    eosio_assert(round_itr != _globals.end(), "Unknown global id");
+    uint64_t current_round = round_itr->val;
+
+    auto betid_itr = _globals.find(GLOBAL_ID_BET);
+    eosio_assert(betid_itr != _globals.end(), "Unknown global id");
+    
     // Todo: check bet_num by eosio_assert
 
-    _bet.emplace(_self, [&](auto &bet) {
-        bet.id = bet_id;
+    _bets.emplace(_self, [&](auto &bet) {
+        bet.id = betid_itr->val;
         bet.bet_round = current_round;
         bet.bettor = transfer_data.from;
         bet.bet_case = bet_case;
-        bet.bet_amount = transfer_data.quantity.amount;
-        bet.active = bet_num;
-        bet.bet_at = time_point_sec(now());
+        bet.bet_amount = transfer_data.quantity;
+        bet.active = 1;
+        bet.bet_at = eosio::time_point_sec(now());
     });
 }
 
 void dicegame::setactived(bool actived)
 {
     require_auth(_self);
-    _global_state.active = actived;
+    auto pos = _globals.find(GLOBAL_ID_ACTIVE);
+    if (pos == _globals.end())
+    {
+        _globals.emplace(_self, [&](auto &info) {
+            info.id = GLOBAL_ID_ACTIVE;
+            info.val = (uint64_t)actived;
+        });
+    }
 }
 
 void dicegame::setglobal(uint64_t id, uint64_t val)
 {
     require_auth(_self);
-    auto pos = _game_setting.find(id);
-    if (pos == _game_setting.end())
+    auto pos = _globals.find(id);
+    if (pos == _globals.end())
     {
-        _game_setting.emplace(_self, [&](auto &info) {
+        _globals.emplace(_self, [&](auto &info) {
             info.id = id;
             info.val = val;
         });
     }
     else
     {
-        _status.modify(pos, 0, [&](auto &info) {
+        _globals.modify(pos, 0, [&](auto &info) {
             info.val = val;
+        });
+    }
+}
+void dicegame::login(account_name bettor, account_name referral)
+{
+    require_auth(_self);
+    auto pos = _players.find(bettor);
+    if (pos == _players.end())
+    {
+        _players.emplace(_self, [&](auto &player) {
+            player.bettor = bettor;
+            player.referral = referral;
+        });
+    }
+    else
+    {
+        _players.modify(pos, 0, [&](auto &player) {
+            player.referral = referral;
         });
     }
 }
@@ -123,29 +135,73 @@ void dicegame::setglobal(uint64_t id, uint64_t val)
 void dicegame::startgame(account_name username)
 {
     // Ensure this action is authorized by contract owner
-    require_auth(self);
-    uint64_t next = _global_state.cur_round + 1;
-    eosio_assert(next > _global_state.cur_round, "new round number is smaller than or equal with the old!");
+    require_auth(_self);
+
+    auto round_itr = _globals.find(GLOBAL_ID_ROUND);
+    eosio_assert(round_itr != _globals.end(), "Unknown global id");
+    uint64_t current_round = round_itr->val;
+
+    // check current round was ended
+    auto game_itr = _games.find(current_round);
+    eosio_assert(game_itr->status == DONE, "current game hasn't done yet");
+
+    uint64_t next = current_round + 1;
+    eosio_assert(next > round_itr->val, "new round number should greater than the old!");
     //Todo: initial for new game
-    _games.emplace(self, [&](auto &info) {
-        info.round = next;
-        info.start_at = now();
+    _games.emplace(_self, [&](auto &game) {
+        game.round = next;
+        game.start_at = eosio::time_point_sec(now());
+        game.status = ONGOING;
+    });
+
+    _globals.modify(round_itr, 0, [&](auto &info) {
+        info.val = next;
+    });
+}
+
+void dicegame::revealdice(account_name username)
+{
+    require_auth(_self);
+
+    auto round_itr = _globals.find(GLOBAL_ID_ROUND);
+    eosio_assert(round_itr != _globals.end(), "Unknown global id");
+    uint64_t current_round = round_itr->val;
+
+    auto round_duration_itr = _globals.find(GLOBAL_ID_ROUND_DURATION);
+    eosio_assert(round_duration_itr != _globals.end(), "Unknown global id");
+    uint64_t round_duration = round_duration_itr->val;
+
+    auto round_max_bets_itr = _globals.find(GLOBAL_ID_ROUND_MAX_BETS);
+    eosio_assert(round_max_bets_itr != _globals.end(), "Unknown global id");
+    uint64_t round_max_bets = round_max_bets_itr->val;
+
+    auto game_itr = _games.find(current_round);
+    eosio_assert(game_itr->status == ONGOING, "current game hasn't active yet");
+    eosio_assert((game_itr->player_num >= round_max_bets), "current game doesn't reached to limitation");
+
+    // get radom for three bet:
+    _games.modify(game_itr, 0, [&](auto &game) {
+        game.dice_one = random(6) + 1;
+        game.dice_two = random(6) + 1;
+        game.dice_three = random(6) + 1;
+        game.stop_at = eosio::time_point_sec(now());
+        game.status = MINING;
     });
 }
 
 void dicegame::endgame(account_name username)
 {
     // Ensure this action is authorized by the player
-    require_auth(self);
+    require_auth(_self);
 
     // add action to stop game
 }
 
-}; // namespace dicegame
 
 uint64_t dicegame::get_bet_reward(uint8_t bet_case, int64_t amount)
 {
-    return bet_dict.at(bet_case) * amount + amount;
+    //return bet_dict.at(bet_case) * amount + amount;
+    return 0;
 }
 
 // Simple Pseudo Random Number Algorithm, randomly pick a number within 0 to n-1
@@ -203,4 +259,4 @@ int dicegame::random(const int range)
         }                                                                                                       \
     }
 
-EOSIO_ABI_EX(dicegame, (transfer)(startgame)(endgame)(setactived)(setglobal)(playgame)(nextround)(reveal))
+EOSIO_ABI_EX(dicegame, (transfer)(setactived)(setglobal)(login)(startgame)(revealdice)(mine)(endgame)(playgame)(nextround))
