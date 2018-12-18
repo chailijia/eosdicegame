@@ -1,11 +1,10 @@
 #include "dicegame.hpp"
 
 #define GLOBAL_ID_BET 101
-#define GLOBAL_ID_HISTORY_INDEX 102
-#define GLOBAL_ID_ACTIVE 103
-#define GLOBAL_ID_ROUND 104
-#define GLOBAL_ID_ROUND_DURATION 105
-#define GLOBAL_ID_ROUND_MAX_BETS 106
+#define GLOBAL_ID_ACTIVE 102
+#define GLOBAL_ID_ROUND 103
+#define GLOBAL_ID_ROUND_DURATION 103
+#define GLOBAL_ID_ROUND_MAX_PLAYERS 104
 
 #define SINGLE_BET_MAX_PERCENT 5
 
@@ -70,7 +69,17 @@ void dicegame::transfer(uint64_t sender, uint64_t receiver)
 
     auto betid_itr = _globals.find(GLOBAL_ID_BET);
     eosio_assert(betid_itr != _globals.end(), "Unknown global id");
-    
+
+    auto round_max_players_itr = _globals.find(GLOBAL_ID_ROUND_MAX_PLAYERS);
+    eosio_assert(round_max_players_itr != _globals.end(), "Unknown global id");
+    uint64_t round_max_players = round_max_players_itr->val;
+
+    auto game_itr = _games.find(current_round);
+    eosio_assert((game_itr->player_num < round_max_players), "current game was reached to max players");
+
+    _games.modify(game_itr, 0, [&](auto &info) {
+        info.player_num += 1;
+    });
     // Todo: check bet_num by eosio_assert
 
     _bets.emplace(_self, [&](auto &bet) {
@@ -173,13 +182,10 @@ void dicegame::revealdice(account_name username)
     eosio_assert(round_duration_itr != _globals.end(), "Unknown global id");
     uint64_t round_duration = round_duration_itr->val;
 
-    auto round_max_bets_itr = _globals.find(GLOBAL_ID_ROUND_MAX_BETS);
-    eosio_assert(round_max_bets_itr != _globals.end(), "Unknown global id");
-    uint64_t round_max_bets = round_max_bets_itr->val;
+
 
     auto game_itr = _games.find(current_round);
     eosio_assert(game_itr->status == ONGOING, "current game hasn't active yet");
-    eosio_assert((game_itr->player_num >= round_max_bets), "current game doesn't reached to limitation");
 
     // get radom for three bet:
     _games.modify(game_itr, 0, [&](auto &game) {
@@ -200,10 +206,26 @@ void dicegame::endgame(account_name username)
 }
 
 
-uint64_t dicegame::get_bet_reward(uint8_t bet_case, int64_t amount)
+uint64_t dicegame::get_bet_reward(uint64_t bet_case, uint64_t amount_atm)
 {
-    //return bet_dict.at(bet_case) * amount + amount;
-    return 0;
+    auto game_itr = _games.find(current_round);
+
+    auto bet_itr = _bets.find(bet_id);
+    eosio_assert(bet_itr != _bets.end(), "bet id doesn't exist");
+
+    switch{
+        case 111:
+        case 222:
+        case 333:
+        case 444:
+        case 555:
+        case 666:
+
+        case 121
+
+    }
+
+    return bet_itr->amount*find_prefix(betcase_reward, bet_itr->bet_case)->second;
 }
 
 // Simple Pseudo Random Number Algorithm, randomly pick a number within 0 to n-1

@@ -73,11 +73,9 @@ private:
     account_name referral;
     uint64_t bet_total;
     uint64_t bet_payout;
-    eosio::time_point_sec last_time;
-
     uint64_t primary_key() const { return bettor; }
 
-    EOSLIB_SERIALIZE(player, (bettor)(referral)(bet_total)(bet_payout)(last_time))
+    EOSLIB_SERIALIZE(player, (bettor)(referral)(bet_total)(bet_payout))
   };
 
   typedef eosio::multi_index<N(players), player> players_table;
@@ -138,7 +136,8 @@ private:
   seed_table _seed;
 
 int random(const int range);
-uint64_t get_bet_reward(uint8_t bet_case, int64_t amount);
+
+uint64_t get_bet_reward(int64_t bet_id);
 
 template<typename Map> typename Map::const_iterator
 find_prefix(Map const& map, typename Map::key_type const& key)
