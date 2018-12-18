@@ -59,8 +59,10 @@ void dicegame::transfer(uint64_t sender, uint64_t receiver)
         referral = possible_ref;
     }
 
-    const int64_t bet_case = std::stoull(bet_str, 0, 10);
-    eosio_assert((bet_case >= 0) && (bet_case <= 28), "Bet number must be >= 0, <= 28.");
+    // check bet case is valid
+    auto betcase_itr = find_prefix(betcase_reward, bet_str);
+    eosio_assert(betcase_itr != betcase_reward.end(), "Bet case doesn't exist");
+
 
     auto round_itr = _globals.find(GLOBAL_ID_ROUND);
     eosio_assert(round_itr != _globals.end(), "Unknown global id");
@@ -75,7 +77,7 @@ void dicegame::transfer(uint64_t sender, uint64_t receiver)
         bet.id = betid_itr->val;
         bet.bet_round = current_round;
         bet.bettor = transfer_data.from;
-        bet.bet_case = bet_case;
+        bet.bet_case = bet_str;
         bet.bet_amount = transfer_data.quantity;
         bet.active = 1;
         bet.bet_at = eosio::time_point_sec(now());
@@ -229,6 +231,7 @@ int dicegame::random(const int range)
     int random_result = new_seed_value % range;
     return random_result;
 }
+
 
 #define EOSIO_ABI_EX(TYPE, MEMBERS)                                                                             \
     extern "C"                                                                                                  \
