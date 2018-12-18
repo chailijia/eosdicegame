@@ -2,12 +2,27 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 // Components
-import { Header, BetTable } from 'components';
+import { Header, BetTable, RollingDice } from 'components';
 import DiceBoard from 'components/DiceBoard/DiceBoard.jsx';
 
 class App extends Component {
 
   render() {
+    const dice = {
+      countDown: true,
+      time2dice: 1,
+      numberOfDices:3,
+
+      dice1timer:"1s",
+      dice1value: 1,
+
+      dice2timer:"1s",
+      dice2value: 3,
+
+      dice3timer:"1s",
+      dice3value: 4
+    };
+
     return (
       <div className="App">
         <Header />
@@ -15,7 +30,8 @@ class App extends Component {
         <div className="dice_board_center">
             <DiceBoard />
             </div>
-        </div>
+            <RollingDice {...dice}/>
+        </div>        
         <div className="dice_table">
           <BetTable />
         </div>

@@ -1,12 +1,12 @@
 
  .goto_dice1{
     background:url(dice.png);
-    height:147px;width:147px;
+    height:51px;width:51px;
     background-position:-333px -63px;
     background-repeat:no-repeat;
     position: absolute;
-    left: 400px;
-    top: 350px;
+    left: 555px;
+    top: 450px;
    
     -webkit-animation-name: dice1transform; /* Safari 4.0 - 8.0 */
      -webkit-animation-duration: 1s; /* Safari 4.0 - 8.0 */
@@ -21,12 +21,12 @@
    
      .goto_dice2{
     background:url(dice.png);
-    height:147px;width:147px;
+    height:51px;width:51px;
     background-position:-45px -45px;
     background-repeat:no-repeat;
     position: absolute;
     left: 600px;
-    top: 350px;
+    top: 450px;
    
     -webkit-animation-name: dice2transform; /* Safari 4.0 - 8.0 */
      -webkit-animation-duration: 1s; /* Safari 4.0 - 8.0 */
@@ -41,12 +41,12 @@
    
      .goto_dice3{
     background:url(dice.png);
-    height:147px;width:147px;
+    height:51px;width:51px;
     background-position:-45px -45px;
     background-repeat:no-repeat;
     position: absolute;
-    left: 800px;
-    top: 350px;
+    left: 645px;
+    top: 450px;
    
     -webkit-animation-name: dice3transform; /* Safari 4.0 - 8.0 */
      -webkit-animation-duration: 1.4s; /* Safari 4.0 - 8.0 */

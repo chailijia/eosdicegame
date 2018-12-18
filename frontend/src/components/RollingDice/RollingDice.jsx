@@ -52,33 +52,33 @@ class DiceRoller extends React.Component{
     diceValueMapping(props){
           switch (props)
           {
-              case 1: 
-              return "-106px -226px";
-              break;
+            case 1: 
+            return "-145px -264px";
+            break;
 
-              case 2: 
-              return "-393px -226px";
-              break;
+            case 2: 
+            return "-432px -264px";
+            break;
 
-              case 3: 
-              return "-672px -229px";
-              break;
+            case 3: 
+            return "-711px -268px";
+            break;
 
-              case 4: 
-              return "-956px -232px";
-              break;
+            case 4: 
+            return "-994px -270px";
+            break;
 
-              case 5: 
-              return "-1251px -230px";
-              break;
+            case 5: 
+            return "-1289px -268px";
+            break;
 
-              case 6: 
-              return "-1531px -230px";
-              break;
+            case 6: 
+            return "-1571px -268px";
+            break;
 
-              default:
-              return "-106px -226px";
-          }
+            default:
+            return "-145px -264px";
+        }
 
       }
 
